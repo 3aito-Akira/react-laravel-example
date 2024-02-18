@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\Task;
 
 class TaskTest extends TestCase
 {
@@ -13,9 +14,10 @@ class TaskTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-        $response->assertOk();
+        $tasks = Task::factory()->count(10)->create();
+        //dd($tasks);
+        $response = $this->getJson('api/tasks');
+        //dd($response);
+        $response->assertOk()->assertJsonCount($tasks->count());
     }
 }
