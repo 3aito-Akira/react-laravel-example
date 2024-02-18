@@ -20,4 +20,17 @@ class TaskTest extends TestCase
         //dd($response);
         $response->assertOk()->assertJsonCount($tasks->count());
     }
+
+    /**
+     * @test
+     */
+    public function test_task_store()
+    {
+        $data = [
+            'title' => 'test投稿'
+        ];
+        $response = $this->postJson('api/tasks',$data);
+        //dd($response->json());
+        $response->assertStatus(201);
+    }
 }
