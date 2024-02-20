@@ -2140,7 +2140,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.updateDoneTask = exports.getTasks = void 0;
+exports.createTask = exports.updateDoneTask = exports.getTasks = void 0;
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var getTasks = function getTasks() {
   return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -2186,6 +2186,28 @@ var updateDoneTask = function updateDoneTask(_ref) {
   }));
 };
 exports.updateDoneTask = updateDoneTask;
+var createTask = function createTask(title) {
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    var _yield$axios_1$defaul3, data;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return axios_1["default"].post("api/tasks", {
+            title: title
+          });
+        case 2:
+          _yield$axios_1$defaul3 = _context3.sent;
+          data = _yield$axios_1$defaul3.data;
+          return _context3.abrupt("return", data);
+        case 5:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+};
+exports.createTask = createTask;
 
 /***/ }),
 
@@ -2295,25 +2317,72 @@ exports["default"] = LoginPage;
 "use strict";
 
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  __setModuleDefault(result, mod);
+  return result;
 };
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var TaskQuery_1 = __webpack_require__(/*! ../../../queries/TaskQuery */ "./resources/ts/queries/TaskQuery.ts");
 var TaskInput = function TaskInput() {
+  var _ref = (0, react_1.useState)(''),
+    _ref2 = _slicedToArray(_ref, 2),
+    title = _ref2[0],
+    setTitle = _ref2[1];
+  var createTask = (0, TaskQuery_1.useCreateTask)();
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    createTask.mutate(title);
+    setTitle('');
+  };
   return react_1["default"].createElement("form", {
-    className: "input-form"
+    className: "input-form",
+    onSubmit: handleSubmit
   }, react_1["default"].createElement("div", {
     className: "inner"
   }, react_1["default"].createElement("input", {
     type: "text",
     className: "input",
     placeholder: "TODO\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-    defaultValue: ""
+    value: title,
+    onChange: function onChange(e) {
+      setTitle(e.target.value);
+    }
   }), react_1["default"].createElement("button", {
     className: "btn is-primary"
   }, "\u8FFD\u52A0")));
@@ -2490,7 +2559,7 @@ var __importStar = this && this.__importStar || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.useUpdateDoneTask = exports.useTasks = void 0;
+exports.useCreateTask = exports.useUpdateDoneTask = exports.useTasks = void 0;
 var react_query_1 = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
 var api = __importStar(__webpack_require__(/*! ../api/TaskAPI */ "./resources/ts/api/TaskAPI.ts"));
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.js");
@@ -2512,6 +2581,19 @@ var useUpdateDoneTask = function useUpdateDoneTask() {
   });
 };
 exports.useUpdateDoneTask = useUpdateDoneTask;
+var useCreateTask = function useCreateTask() {
+  var queryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.createTask, {
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries('tasks');
+      react_toastify_1.toast.error('登録成功');
+    },
+    onError: function onError() {
+      react_toastify_1.toast.error('登録失敗');
+    }
+  });
+};
+exports.useCreateTask = useCreateTask;
 
 /***/ }),
 
