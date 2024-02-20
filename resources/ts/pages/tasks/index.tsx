@@ -1,9 +1,14 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import TaskInput from "./components/TaskInput";
+import TaskList from "./components/TaskList";
 
 const TaskPage: React.VFC = () => {
+    
     return(
-        <h1>Tasks Page</h1>
+        <>
+            <TaskInput />
+            <TaskList />
+        </>
     )
 }
 

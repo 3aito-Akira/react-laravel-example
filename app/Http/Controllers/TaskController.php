@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Requests\TaskRequest;
+use Illuminate\Http\Request;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -72,5 +73,14 @@ class TaskController extends Controller
     {
         //
         return $task->delete() ? response()->json($task) : response()->json([],500);
+    }
+
+    //\Requestになっているところをエラーが出たのでTaskRequestに変更している
+    public function updateDone (Task $task, Request $request)
+    {
+
+        $task->is_done = $request->is_done;
+
+        return $task->update() ?  response()->json($task) : response()->json([],500);
     }
 }
