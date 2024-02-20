@@ -13,7 +13,7 @@ const updateDoneTask = async ({id, is_done}: Task) => {
 }
 
 const createTask = async (title: string) => {
-    const { data } = await axios.post<Task>(`api/tasks` ,{title: title});
+    const { data } = await axios.post<Task>(`/api/tasks` ,{title: title});
     return data;
 }
 
