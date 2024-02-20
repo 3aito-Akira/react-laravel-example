@@ -2588,7 +2588,16 @@ var useCreateTask = function useCreateTask() {
       queryClient.invalidateQueries('tasks');
       react_toastify_1.toast.error('登録成功');
     },
-    onError: function onError() {
+    onError: function onError(error) {
+      var _a, _b, _c;
+      console.log((_a = error.response) === null || _a === void 0 ? void 0 : _a.data);
+      if ((_b = error.response) === null || _b === void 0 ? void 0 : _b.data.errors) {
+        Object.values((_c = error.response) === null || _c === void 0 ? void 0 : _c.data.errors).map(function (messages) {
+          messages.map(function (message) {
+            console.log(message);
+          });
+        });
+      }
       react_toastify_1.toast.error('登録失敗');
     }
   });
