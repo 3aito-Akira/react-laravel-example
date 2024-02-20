@@ -2140,7 +2140,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.createTask = exports.updateDoneTask = exports.getTasks = void 0;
+exports.deleteTask = exports.updateTask = exports.createTask = exports.updateDoneTask = exports.getTasks = void 0;
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var getTasks = function getTasks() {
   return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -2208,6 +2208,48 @@ var createTask = function createTask(title) {
   }));
 };
 exports.createTask = createTask;
+var updateTask = function updateTask(_ref2) {
+  var id = _ref2.id,
+    task = _ref2.task;
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    var _yield$axios_1$defaul4, data;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
+          return axios_1["default"].put("/api/tasks/".concat(id), task);
+        case 2:
+          _yield$axios_1$defaul4 = _context4.sent;
+          data = _yield$axios_1$defaul4.data;
+          return _context4.abrupt("return", data);
+        case 5:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4);
+  }));
+};
+exports.updateTask = updateTask;
+var deleteTask = function deleteTask(id) {
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+    var _yield$axios_1$defaul5, data;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          _context5.next = 2;
+          return axios_1["default"]["delete"]("/api/tasks/".concat(id));
+        case 2:
+          _yield$axios_1$defaul5 = _context5.sent;
+          data = _yield$axios_1$defaul5.data;
+          return _context5.abrupt("return", data);
+        case 5:
+        case "end":
+          return _context5.stop();
+      }
+    }, _callee5);
+  }));
+};
+exports.deleteTask = deleteTask;
 
 /***/ }),
 
@@ -2400,19 +2442,107 @@ exports["default"] = TaskInput;
 "use strict";
 
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  __setModuleDefault(result, mod);
+  return result;
 };
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var TaskQuery_1 = __webpack_require__(/*! ../../../queries/TaskQuery */ "./resources/ts/queries/TaskQuery.ts");
 var TaskItem = function TaskItem(_ref) {
   var task = _ref.task;
   var updateDoneTask = (0, TaskQuery_1.useUpdateDoneTask)();
+  var updateTask = (0, TaskQuery_1.useUpdateTask)();
+  var deleteTask = (0, TaskQuery_1.useDeleteTask)();
+  var _ref2 = (0, react_1.useState)(undefined),
+    _ref3 = _slicedToArray(_ref2, 2),
+    editTitle = _ref3[0],
+    setEditTitle = _ref3[1];
+  var handleToggleEdit = function handleToggleEdit() {
+    setEditTitle(task.title);
+  };
+  var handleOnKey = function handleOnKey(e) {
+    if (['Escape', 'Tab'].includes(e.key)) {
+      setEditTitle(undefined);
+    }
+  };
+  var handleUpdate = function handleUpdate(e) {
+    e.preventDefault();
+    if (!editTitle) {
+      console.log('you have to input title');
+      return;
+    }
+    var newTask = Object.assign({}, task);
+    //const newTask = task;
+    newTask.title = editTitle;
+    updateTask.mutate({
+      id: task.id,
+      task: newTask
+    });
+    setEditTitle(undefined);
+  };
+  var handleInputChange = function handleInputChange(e) {
+    setEditTitle(e.target.value);
+  };
+  var itemInput = function itemInput() {
+    return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("form", {
+      onSubmit: handleUpdate
+    }, react_1["default"].createElement("input", {
+      type: "text",
+      className: "input",
+      defaultValue: editTitle,
+      onKeyDown: handleOnKey,
+      onChange: handleInputChange
+    })), react_1["default"].createElement("button", {
+      className: "btn",
+      onClick: handleUpdate
+    }, "update"));
+  };
+  var itemText = function itemText() {
+    return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("div", {
+      onClick: handleToggleEdit
+    }, react_1["default"].createElement("span", null, task.title)), react_1["default"].createElement("button", {
+      className: "btn is-delete",
+      onClick: function onClick() {
+        return deleteTask.mutate(task.id);
+      }
+    }, "delete"));
+  };
   return react_1["default"].createElement("li", {
     className: task.is_done ? 'done' : ''
   }, react_1["default"].createElement("label", {
@@ -2423,9 +2553,7 @@ var TaskItem = function TaskItem(_ref) {
     onClick: function onClick() {
       return updateDoneTask.mutate(task);
     }
-  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, task.title)), react_1["default"].createElement("button", {
-    className: "btn is-delete"
-  }, "\u524A\u9664"));
+  })), editTitle === undefined ? itemText() : itemInput());
 };
 exports["default"] = TaskItem;
 
@@ -2594,7 +2722,7 @@ var __importStar = this && this.__importStar || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.useCreateTask = exports.useUpdateDoneTask = exports.useTasks = void 0;
+exports.useDeleteTask = exports.useUpdateTask = exports.useCreateTask = exports.useUpdateDoneTask = exports.useTasks = void 0;
 var react_query_1 = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
 var api = __importStar(__webpack_require__(/*! ../api/TaskAPI */ "./resources/ts/api/TaskAPI.ts"));
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.js");
@@ -2638,6 +2766,41 @@ var useCreateTask = function useCreateTask() {
   });
 };
 exports.useCreateTask = useCreateTask;
+var useUpdateTask = function useUpdateTask() {
+  var queryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.updateTask, {
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries('tasks');
+      react_toastify_1.toast.error('更新成功');
+    },
+    onError: function onError(error) {
+      var _a, _b, _c;
+      console.log((_a = error.response) === null || _a === void 0 ? void 0 : _a.data);
+      if ((_b = error.response) === null || _b === void 0 ? void 0 : _b.data.errors) {
+        Object.values((_c = error.response) === null || _c === void 0 ? void 0 : _c.data.errors).map(function (messages) {
+          messages.map(function (message) {
+            console.log(message);
+          });
+        });
+      }
+      react_toastify_1.toast.error('更新失敗');
+    }
+  });
+};
+exports.useUpdateTask = useUpdateTask;
+var useDeleteTask = function useDeleteTask() {
+  var queryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.deleteTask, {
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries('tasks');
+      react_toastify_1.toast.error('削除成功');
+    },
+    onError: function onError() {
+      react_toastify_1.toast.error('更新失敗');
+    }
+  });
+};
+exports.useDeleteTask = useDeleteTask;
 
 /***/ }),
 

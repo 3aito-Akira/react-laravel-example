@@ -41,7 +41,47 @@ const useCreateTask = () => {
     });
 }
 
+const useUpdateTask = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(api.updateTask,{
+        onSuccess: () => {
+            queryClient.invalidateQueries('tasks'); 
+            toast.error('更新成功');
+        },
+        onError: (error: AxiosError) => {
+            console.log(error.response?.data); 
+            if(error.response?.data.errors){
+                Object.values(error.response?.data.errors).map(
+                    (messages:any) => {
+                        messages.map((message:string)=>{console.log(message)})
+                    } 
+                );
+
+            }
+            toast.error('更新失敗');
+        }
+
+    });
+}
+
+const useDeleteTask = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(api.deleteTask,{
+        onSuccess: () => {
+            queryClient.invalidateQueries('tasks'); 
+            toast.error('削除成功');
+        },
+        onError: () => {
+            toast.error('更新失敗');
+        }
+
+    });
+}
+
+
 
 export {
-    useTasks,useUpdateDoneTask,useCreateTask
+    useTasks,useUpdateDoneTask,useCreateTask,useUpdateTask,useDeleteTask
 }

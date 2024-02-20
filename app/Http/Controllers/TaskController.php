@@ -78,6 +78,7 @@ class TaskController extends Controller
     //\Requestになっているところをエラーが出たのでTaskRequestに変更している
     public function updateDone (Task $task, Request $request)
     {
+        //abort(500);
 
         $task->is_done = $request->is_done;
 
